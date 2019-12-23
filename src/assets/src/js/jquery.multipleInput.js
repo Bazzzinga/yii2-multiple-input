@@ -465,20 +465,25 @@
 
     var getCurrentIndex = function($wrapper) {
         var maxIndex = -1;
-        $wrapper
+        var list = $wrapper
             .find('.multiple-input-list .multiple-input-list__item')
             .filter(function(){
                 return $(this).parents('.multiple-input').first().attr('id') === $wrapper.attr('id');
-            }).each(function(i, e){
-                var id = parseInt($(e)
-                    .find('input')
-                    .first()
-                    .attr('name')
-                    .split('][')[1]);
-                if (id > maxIndex) {
-                    maxIndex = id;
-                }
             });
+        list.each(function(i, e){
+            var id = parseInt($(e)
+                .find('input')
+                .first()
+                .attr('name')
+                .split('][')[1]);
+            if (id > maxIndex) {
+                maxIndex = id;
+            }
+        });
+
+        if (maxIndex === -1) {
+            return list.length;
+        }
         return maxIndex + 1;
     };
 
