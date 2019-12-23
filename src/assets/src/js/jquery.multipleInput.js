@@ -464,11 +464,22 @@
     };
 
     var getCurrentIndex = function($wrapper) {
-        return $wrapper
+        var maxIndex = -1;
+        $wrapper
             .find('.multiple-input-list .multiple-input-list__item')
             .filter(function(){
                 return $(this).parents('.multiple-input').first().attr('id') === $wrapper.attr('id');
-            }).length;
+            }).each(function(i, e){
+                var id = parseInt($(e)
+                    .find('input')
+                    .first()
+                    .attr('name')
+                    .split('][')[1]);
+                if (id > maxIndex) {
+                    maxIndex = id;
+                }
+            });
+        return maxIndex + 1;
     };
 
     var getRowValues = function (element) {
